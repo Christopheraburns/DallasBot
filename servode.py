@@ -313,7 +313,7 @@ class Servo(object):
             self._wheel_mode = False
             log.info("[wheel_mode] wrote enable=False registers")
 
-    def wheel_speed(self, speed=512, cw=True):
+    def wheel_speed(self, speed=125, cw=True):
         """
         Set the Servo's wheel speed. If the servo is not in wheel mode it will
         be placed into wheel mode.
@@ -350,6 +350,8 @@ class Servo(object):
         return result['value']
 
     def write(self, register, value):
+        # try to hardcode the speed
+        speed = self.sp.write_register(self.servo_id, 32, 100)
         result = self.sp.write_register(self.servo_id, register, value)
         # self._fill_status(result)
 
